@@ -1881,7 +1881,21 @@ class Slider {
 
     if (n < 1) {
       this.slideIndex = this.slides.length;
-    } // this.slides выводится как NodeList, поэтому через оператор разворота переводим в массив
+    }
+
+    try {
+      this.hanson.style.opacity = 0;
+
+      if (n === 3) {
+        this.hanson.classList.add("animated");
+        setTimeout(() => {
+          this.hanson.style.opacity = 1;
+          this.hanson.classList.add("slideInUp");
+        }, 3000);
+      } else {
+        this.hanson.classList.remove("slideInUp");
+      }
+    } catch (e) {} // this.slides выводится как NodeList, поэтому через оператор разворота переводим в массив
 
 
     [...this.slides].forEach(slide => {
@@ -1895,9 +1909,14 @@ class Slider {
   }
 
   render() {
+    try {
+      this.hanson = document.querySelector(".hanson");
+    } catch (e) {}
+
     this.btns.forEach(btn => {
       btn.addEventListener("click", () => {
         this.plusSlides(1);
+        console.log(this.slideIndex);
       });
       btn.parentNode.previousElementSibling.addEventListener("click", e => {
         e.preventDefault();
